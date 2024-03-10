@@ -1,0 +1,45 @@
+body {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+}
+
+.Contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    margin: auto;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    width: 90%;
+}
+
+.inputsSingup {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.label {
+    padding: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.btn_registrar {
+    padding: 10px;
+    width: 75%;
+    border: 0;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    background-color: blue;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}

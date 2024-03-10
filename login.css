@@ -1,0 +1,89 @@
+body {
+    background-color: lightgray;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+  }
+  
+.contenerBiembenida{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+.Biembenida{
+    margin-top: 10%;
+    padding: 5%;
+}
+
+.container_login{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    padding: 10%;
+    width: 40%;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+
+.inputs{
+    padding: 15px;
+    margin: 15px;
+    width: 120%;
+    border-radius: 5px;
+}
+
+.btn_login{
+    padding: 10px;
+    width: 100%;
+    border: 0;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: blue;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+.btn_login:hover {
+    background-color: rgb(4, 4, 164); 
+    cursor: pointer;
+  }
+  
+
+
+.olvidarCOntraseña{
+    margin-top: 15px;
+    color: rgb(17, 0, 255);
+}
+
+.olvidarCOntraseña:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn_singup{
+    padding: 15px;
+    width: 60%;
+    border: 0;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: rgb(0, 255, 0);
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+.btn_singup:hover {
+    background-color: rgb(0, 165, 0);
+    cursor: pointer;
+  }
