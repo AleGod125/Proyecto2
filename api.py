@@ -1,31 +1,51 @@
 import mysql.connector
-from fastapi import FastAPI , HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-mysql_confi = {
-    'user' : 'root',
-    'password' : '1234',
-    'host' : 'localhost',
-    'database' : 'python',
-    'auth_plugin' : 'mysql_native_password'
+mysql_config = {
+    'user': 'root',
+    'password': '1234',
+    'host': 'localhost',
+    'database': 'python',
+    'auth_plugin': 'mysql_native_password'
 }
 
-Connection = mysql.connector.connect(**mysql_confi)
+Connection = mysql.connector.connect(**mysql_config)
 
 def get_connection():
     return Connection
 
 class UserApi(BaseModel):
-    Email:str
-    Password:str
+    Nombre: str
+    Apellido: str
+    PhoneNumber: int
+    Email: str
+    Password: str
 
 app = FastAPI()
 
+# Middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
-@app.get('/u')
+def usuario_existe(email):
+    cursor = Connection.cursor()
+    query = "SELECT COUNT(*) FROM users WHERE email = %s"
+    cursor.execute(query, (email,))
+    result = cursor.fetchone()[0]
+    cursor.close()
+    return result > 0
+
+@app.get('/getUser')
 async def get_User():
     cursor = Connection.cursor(dictionary=True)
-    query = "SELECT * FROM usersapi"
+    query = "SELECT * FROM users"
 
     try:
         cursor.execute(query)
@@ -33,74 +53,28 @@ async def get_User():
         return {'message' : 'se obtuvo los usuarios exitosamente'}
     except mysql.connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener los usuarios {e}")
+    finally:
+        cursor.close()
 
-@app.post('/u')
-async def create_users(userapi: UserApi):
-    cursor = Connection.cursor()
-
-    query = "INSERT INTO  usersapi (email, password) Value (%s , %s )"
-    value = (userapi.Email, userapi.Password)
-
-
-    try:
-        cursor.execute("SELECT COUNT(*) FROM usersapi WHERE email = %s", (userapi.Email,))
-        result = cursor.fetchone()
-        cursor.execute(query,value)
-        Connection.commit()
-        return {'message' : 'Usuario se ha resgritrado Exitosamente'}
-    except ValueError as e:
-        raise HTTPException(status_code=403, detail=f"Error de campos {e}")
-    except len(userapi.Password) <= 6:
+@app.post('/createUser/')
+async def create_user(user: UserApi):
+    if usuario_existe(user.Email):
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
+    
+    if len(user.Password) <= 6:
         raise HTTPException(status_code=400, detail="La contraseña debe tener más de 6 caracteres")
-    except result[0] > 0:
-        raise HTTPException(status_code=400, detail="Ya existe un usuario con este correo electrónico")
-    except mysql.connector.Error as e:
-        raise HTTPException(status_code=500, detail=f"Error a resgistrar el Usuario {e}")
-    finally:
-        cursor.close()
-
-@app.put('/u/{email_user}')
-async def update_user(userapi: UserApi, email_user: str):
-    cursor = Connection.cursor()
-
+    
     try:
-        cursor.execute("SELECT COUNT(*) FROM usersapi WHERE email = %s", (userapi.Email,))
-        result = cursor.fetchone()
-
-        cursor.execute(
-            "UPDATE usersapi SET email = %s, password = %s WHERE email = %s",(userapi.Email, userapi.Password, email_user)
-            )
+        cursor = Connection.cursor()
+        query = "INSERT INTO users (nombre, apellido, PhoneNumber, email, password) VALUES (%s, %s, %s, %s, %s)"
+        values = (user.Nombre, user.Apellido, user.PhoneNumber, user.Email, user.Password)
+        cursor.execute(query, values)
         Connection.commit()
-        return {'message' : 'Los datos del Usuario se Han actualizado exitosamente'}
-    except ValueError as e:
-        raise HTTPException(status_code=403, detail=f"Error de campos {e}")
-    except result[0] > 0:
-        raise HTTPException(status_code=400, detail="Ya existe un usuario con este correo electrónico")
-    except result[0] == 0:
-        raise HTTPException(status_code=400, detail="El Usuario no existe ")
-    except mysql.connector.Error as e:
-        raise HTTPException(status_code=500, detail=f"Error al actulizar el asuario {e}")
+
+        user_id = cursor.lastrowid
+
+        return {'message': 'Usuario registrado exitosamente', 'user_id': user_id}
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Error al registrar el usuario ({err})")
     finally:
         cursor.close()
-
-
-@app.delete('/u/{email_user}')
-async def delete_users(userapi: UserApi, email_user: str):
-    cursor = Connection.cursor()
-
-    try:
-        cursor.execute("SELECT COUNT(*) FROM usersapi WHERE email = %s", (userapi.Email,))
-        result = cursor.fetchone()
-
-        cursor.execute("DELETE FROM usersapi WHERE email = %s", (email_user,))
-        Connection.commit()
-        return {'message' : 'El usuario ha sido eliminado exitosamente'}
-   
-    except result[0] == 0:
-        raise HTTPException(status_code=400, detail="El Usuario no existe ")
-    except mysql.connector.Error as e:
-        raise HTTPException(status_code=500, detail=f"Error al actulizar el asuario {e}")
-    finally:
-        cursor.close()
-
-
