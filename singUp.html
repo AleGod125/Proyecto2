@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="singUP.css">
@@ -14,24 +13,24 @@
         Registra aqui tus datos <br> Crea una cuenta nueva
     </h1>
 
-    <div class="Contenedor">
+    <form class="Contenedor" id="Contenedor">
        
         <div class="FyL">
-            <input type="text" placeholder="Nombre" class="inputsFyN">    
-            <input type="text" placeholder="Apellido" class="inputsFyN">    
+            <input type="text" placeholder="Nombre" class="inputsFyN" id="Nombre" name="Nombre">    
+            <input type="text" placeholder="Apellido" class="inputsFyN" id="Apellido" name="Apellido">    
         </div>
-        <input type="number" placeholder="Numero" class="inputsSingup">    
-        <input type="text" placeholder="email" class="inputsSingup">    
-        <input type="password" placeholder="Contraseña" class="inputsSingup">    
-        <input type="password" placeholder="Confirma Contraseña" class="inputsSingup">   
+        <input type="number" placeholder="Numero" class="inputsSingup" id="PhoneNumber" name="PhoneNumber">    
+        <input type="text" placeholder="email" class="inputsSingup" id="email" name="email">    
+        <input type="password" placeholder="Contraseña" class="inputsSingup" id="Contraseña" name="Contraseña">    
+        <input type="password" placeholder="Confirma Contraseña" class="inputsSingup" id="CContraseña" name="CContraseña">   
         <labe>Fecha de nacimiento</labe>
         <input type="date" placeholder="Fecha de nacimiento" class="inputsSingup">   
 
         
-        <button class="btn_registrar">Registra</button>
-          </div>
+        <button class="btn_registrar" type="submit">Registra</button>
+    </form>
         
-       
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+          <script src="singUP.js"></script>
 </body>
-
 </html>

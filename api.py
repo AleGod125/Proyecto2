@@ -18,7 +18,7 @@ def get_connection():
 
 class UserApi(BaseModel):
     Nombre: str
-    Apellido: str
+    Apellido: str  
     PhoneNumber: int
     Email: str
     Password: str
@@ -50,13 +50,12 @@ async def get_User():
     try:
         cursor.execute(query)
         return cursor.fetchall()
-        return {'message' : 'se obtuvo los usuarios exitosamente'}
     except mysql.connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener los usuarios {e}")
     finally:
         cursor.close()
 
-@app.post('/createUser/')
+@app.post('/createUser')
 async def create_user(user: UserApi):
     if usuario_existe(user.Email):
         raise HTTPException(status_code=400, detail="El usuario ya existe")
