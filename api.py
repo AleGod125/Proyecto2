@@ -77,3 +77,16 @@ async def create_user(user: UserApi):
         raise HTTPException(status_code=500, detail=f"Error al registrar el usuario ({err})")
     finally:
         cursor.close()
+        
+@app.post('/login')
+async def login_user(email: str, password: str):
+    cursor = Connection.cursor(dictionary=True)
+    query = "SELECT * FROM users WHERE Email = %s AND Password = %s"
+    cursor.execute(query, (email, password))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if user:
+        return {'message': 'Inicio de sesión exitoso'}
+    else:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
