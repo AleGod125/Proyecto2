@@ -22,6 +22,25 @@ function barra(){
             }
 }
 
+function Eliminar(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+    if (userId) {
+        axios.delete(`http://127.0.0.1:8000/deleteUser?id=${userId}`)
+            .then(function (response) {
+                console.log(response.data);
+                alert ("Usuario ELiminado Exitosamente")
+                window.location.href = "login.html";
+            })
+            .catch(function (error) {
+                console.error('Error al obtener el ID del usuario:', error);
+                document.getElementById('Nombre').textContent = 'Error al obtener la información del usuario.';
+            });
+    } else {
+        document.getElementById('Nombre').textContent = 'User ID not found.';
+    }
+}
+
 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,9 +56,6 @@ window.onload = function() {
                     document.getElementById('Telefono').textContent = userData.PhoneNumber;
                     document.getElementById('COrreo').textContent = userData.Email;
                     document.getElementById('brd').textContent = userData.Brd;
-
-
-
 
                 } else {
                     document.getElementById('Nombre').textContent = 'Usuario no encontrado.';

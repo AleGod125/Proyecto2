@@ -22,6 +22,7 @@ class UserApi(BaseModel):
     PhoneNumber: int
     Email: str
     Password: str
+    Brd:str
 
 app = FastAPI()
 
@@ -65,8 +66,8 @@ async def create_user(user: UserApi):
     
     try:
         cursor = Connection.cursor()
-        query = "INSERT INTO users (nombre, apellido, PhoneNumber, email, password) VALUES (%s, %s, %s, %s, %s)"
-        values = (user.Nombre, user.Apellido, user.PhoneNumber, user.Email, user.Password)
+        query = "INSERT INTO users (nombre, apellido, PhoneNumber, email, password, Brd) VALUES (%s, %s, %s, %s, %s,%s)"
+        values = (user.Nombre, user.Apellido, user.PhoneNumber, user.Email, user.Password, user.Brd)
         cursor.execute(query, values)
         Connection.commit()
 
@@ -120,5 +121,21 @@ async def get_UserInfo(id: int):
         return cursor.fetchall()
     except mysql.connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener los usuarios {e}")
+    finally:
+        cursor.close()
+
+@app.delete('/deleteUser')
+async def delete_user(id: int):
+    cursor = Connection.cursor()
+    query = "DELETE FROM users WHERE UserID = %s"
+
+    try:
+        cursor.execute(query, (id,))
+        Connection.commit()  
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": "User deleted successfully"}
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error al eliminar el usuario {e}")
     finally:
         cursor.close()

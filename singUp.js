@@ -8,19 +8,25 @@ Contenedor.addEventListener('submit', function (event) {
     const PhoneNumber = document.getElementById('PhoneNumber').value;
     const email = document.getElementById('email').value;
     const Contraseña = document.getElementById('Contraseña').value;
+    const Brd = document.getElementById('Brd').value;
+
 
     const postData = {
         Nombre: Nombre, 
         Apellido: Apellido,
         PhoneNumber: PhoneNumber,
         Email: email,
-        Password: Contraseña 
+        Password: Contraseña ,
+        Brd: Brd 
+
     };
 
     axios.post('http://127.0.0.1:8000/createUser', postData) 
         .then(function (response) {
             console.log(response.data)
             alert('Nuevo usuario creado exitosamente');
+            window.location.href = "login.html";
+
         })
         .catch(function (error) {
             console.error('Error al crear el nuevo usuario:', error);

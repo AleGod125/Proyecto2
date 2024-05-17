@@ -56,17 +56,24 @@ body {
     font-size: 45px;
 }
 
-.btn_editar {
-    height: 20%;
+.contenedorbtn {
     margin-left: auto;
     margin-top: auto;
     margin-bottom: 2%;
     margin-right: 2%;
+    display: flex;
+    flex-direction: row;
+}
+
+.btns{
     border: 0;
     border-radius: 5px;
     background-color: rgb(165, 165, 165);
-    width: 10%;
-    height: 25%;
+    padding: 15px;
+    margin: 15px;
+}
+.btns:hover{
+    cursor: pointer;
 }
 
 .Continertext{
