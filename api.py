@@ -77,16 +77,48 @@ async def create_user(user: UserApi):
         raise HTTPException(status_code=500, detail=f"Error al registrar el usuario ({err})")
     finally:
         cursor.close()
-        
+
 @app.post('/login')
 async def login_user(email: str, password: str):
-    cursor = Connection.cursor(dictionary=True)
-    query = "SELECT * FROM users WHERE Email = %s AND Password = %s"
-    cursor.execute(query, (email, password))
-    user = cursor.fetchone()
-    cursor.close()
+    try:
+        cursor = Connection.cursor(dictionary=True)
+        query = "SELECT * FROM users WHERE Email = %s AND Password = %s"
+        cursor.execute(query, (email, password))
+        user = cursor.fetchone()  
 
-    if user:
-        return {'message': 'Inicio de sesión exitoso'}
-    else:
-        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+        if user:
+            return {'message': 'Usuario Iniciado exitosamente'}
+        else:
+            raise HTTPException(status_code=401, detail="Credenciales inválidas")
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Error al iniciar el usuario ({err})")
+    finally:
+        cursor.close()
+
+
+
+@app.get('/getID')
+async def get_ID(email: str, password: str):
+    cursor = Connection.cursor(dictionary=True)
+    query = "SELECT UserID FROM users WHERE Email = %s AND Password = %s"
+
+    try:
+        cursor.execute(query, (email, password))
+        return cursor.fetchall()
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error al obtener los usuarios {e}")
+    finally:
+        cursor.close()
+
+@app.get('/getUserInfo')
+async def get_UserInfo(id: int):
+    cursor = Connection.cursor(dictionary=True)
+    query = "SELECT * FROM users WHERE UserID = %s"
+
+    try:
+        cursor.execute(query,(id,))
+        return cursor.fetchall()
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error al obtener los usuarios {e}")
+    finally:
+        cursor.close()

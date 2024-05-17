@@ -1,0 +1,123 @@
+body {
+    background-color: lightgrey;
+    
+}
+
+.main{
+    margin-top: -3%;
+    height: 100vh;
+    width: 98vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ContenedorProfile{
+    background-color: rgb(198, 196, 196);
+    width: 98.9vw;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner {
+    width: 100%;
+    height: 75%;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    background-size: cover; 
+    background-position: center; 
+}
+
+.info{
+    width: 90%;
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+}
+
+.imgProfile{
+    width: 13%;
+    height: 100%;
+    border-radius: 50%;
+    margin-top: -3%;
+    margin-left:3%;
+    overflow: hidden;
+    border: 5px solid white;
+    background-size: cover; 
+    background-position: center; 
+}
+
+.Nombre{
+    margin: 30px;
+    font-size: 45px;
+}
+
+.btn_editar {
+    height: 20%;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: 2%;
+    margin-right: 2%;
+    border: 0;
+    border-radius: 5px;
+    background-color: rgb(165, 165, 165);
+    width: 10%;
+    height: 25%;
+}
+
+.Continertext{
+    width: 100%;
+    height: 15vh;
+    margin-top: -3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text{
+   margin-top: auto;
+   width: 20%;
+   margin-top: auto;
+   justify-content: center;
+   text-align: center;
+   border-radius: 20px;
+}
+.text:hover{
+    cursor: pointer;
+    background-color: rgb(177, 177, 177);
+}
+.bar{
+    background-color: blue;
+   margin-top: auto;
+   justify-content: center;
+   width: 20%;
+   height: 5%;
+   display: none;
+}
+
+.blockInfo{
+    background-color: white;
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    display: none;
+}
+
+.containerData{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.campo{
+    margin: 10px;
+}

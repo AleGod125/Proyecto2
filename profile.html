@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="profile.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <diV class="ContenedorProfile">
+            <div class="banner" id="myBanner"></div>
+            <div class="info">
+                <div class="imgProfile" id="fotoperfil"></div>
+                <h1 id="Nonmbre" class="Nombre"></h1>
+    
+                <button class="btn_editar">Editar Perfil</button>
+            </div>
+        </diV>
+    </div>
+    
+    <diV class="Continertext"> 
+        <div class="text">
+            <h1 class="textinfo" onclick="barra()" id="textinfo">Informacion</h1>
+        </div>
+
+        <div class="bar" id="barra">
+        </div>
+    </diV>
+
+    <diV class="blockInfo" id="blockInfo">
+        <div class="containerData">
+            <h2>
+                Nombre Completo:
+            </h2>
+            <h2 id="Nonmbre2" class="campo"></h2>
+        </div>
+        <div class="containerData">
+            <h2>
+                Numero Telefonico:
+            </h2>
+            <h2 id="Telefono" class="campo"></h2>
+        </div>
+        <div class="containerData">
+            <h2>
+                Correo Electronico:
+            </h2>
+            <h2 id="COrreo" class="campo"></h2>
+        </div>
+        <div class="containerData">
+            <h2>
+                Fecha de nacimiento:
+            </h2>
+            <h2 id="brd" class="campo"></h2>
+        </div>
+        
+      
+    </diV>
+    
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="profile.js"></script>
+</html>
